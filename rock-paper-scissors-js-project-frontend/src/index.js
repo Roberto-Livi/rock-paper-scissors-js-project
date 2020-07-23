@@ -1,4 +1,4 @@
-console.log("testing...")
+console.log("testing...");
 
 const BACKEND_URL = 'http://localhost:3000';
 fetch(`${BACKEND_URL}/test`)
