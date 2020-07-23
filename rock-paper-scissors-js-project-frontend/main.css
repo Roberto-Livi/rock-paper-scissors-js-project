@@ -1,4 +1,69 @@
+body {
+    background-color: #8fd8ee;
+}
+
+#rectangle {
+    width: 850px;
+    height: 650px;
+    background-color: #f1d6e4;
+    border-radius: 5px;
+    border: 2px solid rgba(111,41,97,.5);
+    padding: 10px;
+    position: absolute;
+    top: 10%;
+    left:15%;
+}
+
 #heading {
     text-align: center;
     font-family: 'Righteous', cursive;
+}
+
+
+#rock-button {
+    border-radius: 10px;
+    width: 90px;
+    height: 90px;
+    position: absolute;
+    top: 55%;
+    left: 25%
+}
+
+#paper-button {
+    border-radius: 10px;
+    width: 90px;
+    height: 90px;
+    position: absolute;
+    top: 55%;
+    left: 45%
+}
+
+#scissors-button {
+    border-radius: 10px;
+    width: 90px;
+    height: 90px;
+    position: absolute;
+    top: 55%;
+    left: 65%
+}
+
+#score-text {
+    color: blue;
+    font-size: 45px;
+    font-family: 'Righteous', 'cursive';
+    position: absolute;
+    top: 70%;
+    left: 35%
+}
+
+#score {
+    text-align: center;
+    color: blue;
+    background-color: white;
+    width: 50px;
+    font-size: 45px;
+    font-family: 'Righteous', 'cursive';
+    position: absolute;
+    top: 70%;
+    left: 53%
 }
