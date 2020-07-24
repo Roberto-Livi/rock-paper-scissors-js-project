@@ -39,6 +39,8 @@ fetch(`${BACKEND_URL}/test`)
     .then(parsedResponse => console.log(parsedResponse));
 
 
+document.getElementById("cpu-choice").style.display = 'none';
+document.getElementById("user-choice").style.display = 'none';
 function userChoice(choice){
     let cpuChoiceArray = ["rock", "paper", "scissors"]
     let cpuElement = document.getElementById("cpu-choice")
@@ -47,7 +49,6 @@ function userChoice(choice){
     spot.src = `images/${choice}.jpg`
 
     let cpuChoice = cpuChoiceArray[Math.floor(Math.random() * cpuChoiceArray.length)];
-    console.log(cpuChoice);
 
     spot.style.display = 'block';
 
@@ -56,6 +57,10 @@ function userChoice(choice){
         cpuElement.src = `images/${cpuChoice}.jpg`
         cpuElement.style.display = 'block';
     }, 1000);
+
+    // if(choice === "rock" && cpuChoice === ""){
+
+    // } else if(choice )
 
     setTimeout(() => {
         spot.style.display = 'none';
