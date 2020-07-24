@@ -2,7 +2,7 @@ body {
     background-color: #8fd8ee;
 }
 
-#rectangle {
+#interface-scope {
     width: 850px;
     height: 650px;
     background-color: #f1d6e4;
@@ -66,4 +66,66 @@ body {
     position: absolute;
     top: 70%;
     left: 53%
+}
+
+#best-score-text {
+    color: blue;
+    font-size: 25px;
+    font-family: 'Righteous', 'cursive';
+    position: absolute;
+    top: 80%;
+    left: 2%
+}
+
+#best-score {
+    text-align: center;
+    color: blue;
+    background-color: white;
+    width: 40px;
+    font-size: 25px;
+    font-family: 'Righteous', 'cursive';
+    position: absolute;
+    top: 80%;
+    left: 20%
+}
+
+#user-choice {
+    border-radius: 10px;
+    width: 90px;
+    height: 90px;
+    position: absolute;
+    top: 30%;
+    left: 30%
+}
+
+#vs {
+    font-family: 'Righteous', 'cursive';
+    font-size: 30px;
+    width: 90px;
+    height: 90px;
+    position: absolute;
+    top: 30%;
+    left: 48%
+}
+
+#cpu-choice {
+    border-radius: 10px;
+    width: 90px;
+    height: 90px;
+    position: absolute;
+    top: 30%;
+    left: 60%;
+}
+
+
+#sign-in-scope {
+    width: 850px;
+    height: 650px;
+    background-color: #f1d6e4;
+    border-radius: 5px;
+    border: 2px solid rgba(111,41,97,.5);
+    padding: 10px;
+    position: absolute;
+    top: 10%;
+    left:15%;
 }
