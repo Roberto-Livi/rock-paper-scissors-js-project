@@ -117,6 +117,16 @@ body {
     left: 60%;
 }
 
+#logout {
+    position: absolute;
+    background-color: rgb(231, 84, 84);
+    font-family: 'Righteous', 'cursive';
+    top: 88%;
+    left: 85%;
+    width: 90px;
+    height: 40px;
+}
+
 
 #sign-in-scope {
     width: 850px;
@@ -128,4 +138,26 @@ body {
     position: absolute;
     top: 10%;
     left:15%;
+}
+
+#enter-name {
+    font-family: 'Righteous', 'cursive';
+    position: absolute;
+    top: 30%;
+    left: 37%;
+}
+
+#name {
+    position: absolute;
+    top: 40%;
+    left: 40%;
+}
+
+#submit {
+    position: absolute;
+    background-color: rgb(2, 231, 231);
+    top: 50%;
+    left: 43%;
+    width: 85px;
+    height: 35px;
 }

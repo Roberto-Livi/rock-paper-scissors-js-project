@@ -1,14 +1,37 @@
 console.log("testing...");
 
-let signIn = true
 
-if(signIn){
-    document.getElementById("interface-scope").style.display = 'block';
-    document.getElementById("sign-in-scope").style.display = 'none';
-} else {
-    document.getElementById("interface-scope").style.display = 'none';
-    document.getElementById("sign-in-scope").style.display = 'block';
+// Which User Interface?
+let signIn = false
+document.getElementById("interface-scope").style.display = 'none';
+document.getElementById("sign-in-scope").style.display = 'block';
+
+function userInterface(signedIn) {
+    if (signedIn) {
+        document.getElementById("interface-scope").style.display = 'block';
+        document.getElementById("sign-in-scope").style.display = 'none';
+    } else {
+        document.getElementById("interface-scope").style.display = 'none';
+        document.getElementById("sign-in-scope").style.display = 'block';
+    }
 }
+
+// Sign In
+document.getElementById("submit").addEventListener("click", () => {
+    signIn = true
+    userInterface(signIn)
+    let name = document.getElementById("name").value
+    console.log(name);
+})
+
+
+// Logout
+document.getElementById("logout").addEventListener("click", () => {
+    signIn = false
+    userInterface(signIn)
+})
+
+
 
 const BACKEND_URL = 'http://localhost:3000';
 fetch(`${BACKEND_URL}/test`)
@@ -44,18 +67,18 @@ function userChoice(choice){
 
 
 
-let x = document.getElementById("rock-button")
-x.addEventListener("click", () => {
+const rock = document.getElementById("rock-button")
+rock.addEventListener("click", () => {
     userChoice("rock")
 })
 
-let y = document.getElementById("paper-button")
-y.addEventListener("click", () => {
+const paper = document.getElementById("paper-button")
+paper.addEventListener("click", () => {
     userChoice("paper")
 })
 
-let z = document.getElementById("scissors-button")
-z.addEventListener("click", () => {
+const scissors = document.getElementById("scissors-button")
+scissors.addEventListener("click", () => {
     userChoice("scissors")
 })
 
