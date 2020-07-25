@@ -101,9 +101,10 @@ function userChoice(choice){
 
 }
 
+
 function addScoreToUser(userData, score){
-    fetch(SCORE_URL, {
-        method: 'POST',
+    fetch(`http://localhost:3000/users/${userData.id}`, {
+        method: 'PATCH',
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json"
