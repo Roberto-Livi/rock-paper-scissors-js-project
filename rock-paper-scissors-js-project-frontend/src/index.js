@@ -1,4 +1,5 @@
 console.log("testing...");
+
 const USER_URL = `http://localhost:3000/users`
 const SCORE_URL = `http://localhost:3000/scores`
 
@@ -39,6 +40,7 @@ document.getElementById("submit").addEventListener("click", () => {
     .then(data => {
         username.innerText = data.name[0].toUpperCase() + data.name.slice(1)
         userData = data;
+        userBestScore(userData)
     })
 })
 
@@ -47,8 +49,9 @@ document.getElementById("submit").addEventListener("click", () => {
 
 // Logout
 document.getElementById("logout").addEventListener("click", () => {
-    signIn = false
-    userInterface(signIn)
+    // signIn = false
+    // userInterface(signIn)
+    location.reload()
 })
 
 
@@ -97,9 +100,8 @@ function userChoice(choice){
         spot.style.display = 'none';
         cpuElement.style.display = 'none';
     }, 2000);
-
-
 }
+
 
 
 function addScoreToUser(userData, score){
@@ -113,6 +115,21 @@ function addScoreToUser(userData, score){
     })
 }
 
+// Get user's best score
+function userBestScore(udata){
+    fetch(`http://localhost:3000/users/${udata.id}`)
+        .then(resp => resp.json())
+        .then(data => data.included.forEach(pushScores))
+}
+
+
+let scores = []
+let bestScore;
+function pushScores(score){
+    scores.push(score.attributes.score)
+    bestScore = Math.max(...scores)
+    document.getElementById("best-score").innerText = bestScore
+}
 
 
 const rock = document.getElementById("rock-button")
@@ -129,6 +146,5 @@ const scissors = document.getElementById("scissors-button")
 scissors.addEventListener("click", () => {
     userChoice("scissors")
 })
-
 
 
