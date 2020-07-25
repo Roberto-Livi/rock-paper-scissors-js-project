@@ -51,6 +51,8 @@ fetch(`${BACKEND_URL}/test`)
 
 document.getElementById("cpu-choice").style.display = 'none';
 document.getElementById("user-choice").style.display = 'none';
+let scoreElement = document.getElementById("score");
+let score = parseInt(scoreElement.innerText);
 function userChoice(choice){
     let cpuChoiceArray = ["rock", "paper", "scissors"]
     let cpuElement = document.getElementById("cpu-choice")
@@ -68,11 +70,20 @@ function userChoice(choice){
         cpuElement.style.display = 'block';
     }, 1000);
 
-    // if(choice === "rock" && cpuChoice === ""){
-
-    // } else if(choice )
-
     setTimeout(() => {
+        if (choice === "rock" && cpuChoice === "scissors") {
+            scoreElement.innerText = score += 1;
+        } else if (choice === "paper" && cpuChoice === "rock") {
+            scoreElement.innerText = score += 1;
+        } else if (choice === "scissors" && cpuChoice === "paper") {
+            scoreElement.innerText = score += 1;
+        } else if (choice === cpuChoice) {
+            scoreElement.innerText = score;
+        } else {
+            // function to pass score to fetch, create score
+            score = 0;
+            scoreElement.innerText = score;
+        }
         spot.style.display = 'none';
         cpuElement.style.display = 'none';
     }, 2000);
