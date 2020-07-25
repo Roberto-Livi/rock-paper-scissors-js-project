@@ -1,4 +1,5 @@
 console.log("testing...");
+const USER_URL = `http://localhost:3000/users`
 
 
 // Which User Interface?
@@ -16,13 +17,22 @@ function userInterface(signedIn) {
     }
 }
 
-// Sign In
+// Sign In User Interface
 document.getElementById("submit").addEventListener("click", () => {
     signIn = true
     userInterface(signIn)
     let name = document.getElementById("name").value
-    console.log(name);
+    fetch(USER_URL, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify(name)
+    })
 })
+
+
 
 
 // Logout
@@ -86,5 +96,6 @@ const scissors = document.getElementById("scissors-button")
 scissors.addEventListener("click", () => {
     userChoice("scissors")
 })
+
 
 
