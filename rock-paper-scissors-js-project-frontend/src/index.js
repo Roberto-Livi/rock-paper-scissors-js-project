@@ -1,11 +1,16 @@
 console.log("testing...");
 const USER_URL = `http://localhost:3000/users`
+const SCORE_URL = `http://localhost:3000/scores`
 
 
 // Which User Interface?
 let signIn = false
 document.getElementById("interface-scope").style.display = 'none';
 document.getElementById("sign-in-scope").style.display = 'block';
+
+// Username
+let username = document.getElementById("username")
+let userData;
 
 function userInterface(signedIn) {
     if (signedIn) {
@@ -29,6 +34,11 @@ document.getElementById("submit").addEventListener("click", () => {
             "Accept": "application/json"
         },
         body: JSON.stringify(name)
+    })
+    .then(resp => resp.json())
+    .then(data => {
+        username.innerText = data.name[0].toUpperCase() + data.name.slice(1)
+        userData = data;
     })
 })
 
@@ -80,7 +90,7 @@ function userChoice(choice){
         } else if (choice === cpuChoice) {
             scoreElement.innerText = score;
         } else {
-            // function to pass score to fetch, create score
+            addScoreToUser(userData, score)
             score = 0;
             scoreElement.innerText = score;
         }
@@ -89,6 +99,17 @@ function userChoice(choice){
     }, 2000);
 
 
+}
+
+function addScoreToUser(userData, score){
+    fetch(SCORE_URL, {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify(score)
+    })
 }
 
 
