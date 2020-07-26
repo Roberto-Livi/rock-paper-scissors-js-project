@@ -43,9 +43,6 @@ document.getElementById("submit").addEventListener("click", () => {
         userData = data;
         userBestScore(userData)
     })
-    // fetch(USER_URL)
-    //   .then((resp) => resp.json())
-    //   .then((data) => leaderBoard(data));
 })
 
 
@@ -115,7 +112,9 @@ function addScoreToUser(userData, score){
         body: JSON.stringify(score)
     })
     classUser = new User(name, score);
-    console.log(User.length);
+    document.getElementById("cpu-choice").style.display = "none";
+    document.getElementById("user-choice").style.display = "none";
+    User.sortUsers()
 }
 
 // Get user's best score
@@ -136,12 +135,6 @@ function pushScores(score){
 }
 
 
-// Leaderboard
-// function leaderBoard(data){
-//     console.log("Hello");
-//     let d = data
-//     console.log(d.data);
-// }
 
 const rock = document.getElementById("rock-button")
 rock.addEventListener("click", () => {
@@ -158,12 +151,55 @@ scissors.addEventListener("click", () => {
     userChoice("scissors")
 })
 
+
+// Gather all Top Scores
+let gatherScores = []
+let count = 1
+
+while(count < 11){
+    let obj = {'name': 'value1', 'score': 'value2'}
+    obj['name'] = document.getElementById(`num-${count}`).innerText
+    obj['score'] = parseInt(document.getElementById(`num-${count}-score`).innerText)
+    gatherScores.push(obj)
+    count += 1
+}
+
+
 class User {
+
+    static #instances = []
 
     constructor(name, score){
         this.name = name
         this.score = score
-        userInstances.push(this)
+        User.#instances.push(this)
+    }
+
+    static instances(){
+        return User.#instances
+    }
+
+    static sortUsers(){
+        let sortedScores = User.instances().sort(function (a, b) {
+            return b.score - a.score;
+        });
+        this.leaderBoard(sortedScores)
+    }
+
+    static leaderBoard(user){
+        let count = 1;
+        user.forEach(function(u){
+            document.getElementById(`num-${count}`).innerText = u.name;
+            document.getElementById(`num-${count}-score`).innerText = u.score;
+            count += 1
+        });
     }
 
 }
+
+let leaderBoardUsers;
+gatherScores.forEach(function (user) {
+    leaderBoardUsers = new User(user.name, user.score);
+});
+
+User.sortUsers()
