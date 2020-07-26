@@ -23,11 +23,12 @@ function userInterface(signedIn) {
     }
 }
 
+let name;
 // Sign In User Interface
 document.getElementById("submit").addEventListener("click", () => {
     signIn = true
     userInterface(signIn)
-    let name = document.getElementById("name").value
+    name = document.getElementById("name").value
     fetch(USER_URL, {
         method: 'POST',
         headers: {
@@ -42,9 +43,10 @@ document.getElementById("submit").addEventListener("click", () => {
         userData = data;
         userBestScore(userData)
     })
+    // fetch(USER_URL)
+    //   .then((resp) => resp.json())
+    //   .then((data) => leaderBoard(data));
 })
-
-
 
 
 // Logout
@@ -53,7 +55,6 @@ document.getElementById("logout").addEventListener("click", () => {
     // userInterface(signIn)
     location.reload()
 })
-
 
 
 const BACKEND_URL = 'http://localhost:3000';
@@ -103,7 +104,7 @@ function userChoice(choice){
 }
 
 
-
+let classUser;
 function addScoreToUser(userData, score){
     fetch(`http://localhost:3000/users/${userData.id}`, {
         method: 'PATCH',
@@ -113,6 +114,8 @@ function addScoreToUser(userData, score){
         },
         body: JSON.stringify(score)
     })
+    classUser = new User(name, score);
+    console.log(User.length);
 }
 
 // Get user's best score
@@ -125,12 +128,20 @@ function userBestScore(udata){
 
 let scores = []
 let bestScore;
+
 function pushScores(score){
     scores.push(score.attributes.score)
     bestScore = Math.max(...scores)
     document.getElementById("best-score").innerText = bestScore
 }
 
+
+// Leaderboard
+// function leaderBoard(data){
+//     console.log("Hello");
+//     let d = data
+//     console.log(d.data);
+// }
 
 const rock = document.getElementById("rock-button")
 rock.addEventListener("click", () => {
@@ -147,4 +158,12 @@ scissors.addEventListener("click", () => {
     userChoice("scissors")
 })
 
+class User {
 
+    constructor(name, score){
+        this.name = name
+        this.score = score
+        userInstances.push(this)
+    }
+
+}
