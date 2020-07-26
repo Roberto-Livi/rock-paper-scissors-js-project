@@ -2,6 +2,7 @@ console.log("testing...");
 
 const USER_URL = `http://localhost:3000/users`
 const SCORE_URL = `http://localhost:3000/scores`
+const LEADERBOARD_URL = `http://localhost:3000/leaderboards`
 
 
 // Which User Interface?
@@ -48,8 +49,6 @@ document.getElementById("submit").addEventListener("click", () => {
 
 // Logout
 document.getElementById("logout").addEventListener("click", () => {
-    // signIn = false
-    // userInterface(signIn)
     location.reload()
 })
 
@@ -91,9 +90,10 @@ function userChoice(choice){
         } else if (choice === cpuChoice) {
             scoreElement.innerText = score;
         } else {
-            addScoreToUser(userData, score)
-            score = 0;
+            let postScore = score
+            score = 0
             scoreElement.innerText = score;
+            addScoreToUser(userData, postScore)
         }
         spot.style.display = 'none';
         cpuElement.style.display = 'none';
@@ -114,7 +114,7 @@ function addScoreToUser(userData, score){
     classUser = new User(name, score);
     document.getElementById("cpu-choice").style.display = "none";
     document.getElementById("user-choice").style.display = "none";
-    User.sortUsers()
+    // User.sortUsers()
 }
 
 // Get user's best score
@@ -153,16 +153,16 @@ scissors.addEventListener("click", () => {
 
 
 // Gather all Top Scores
-let gatherScores = []
-let count = 1
+// let gatherScores = []
+// let count = 1
 
-while(count < 11){
-    let obj = {'name': 'value1', 'score': 'value2'}
-    obj['name'] = document.getElementById(`num-${count}`).innerText
-    obj['score'] = parseInt(document.getElementById(`num-${count}-score`).innerText)
-    gatherScores.push(obj)
-    count += 1
-}
+// while(count < 11){
+//     let obj = {'name': 'value1', 'score': 'value2'}
+//     obj['name'] = document.getElementById(`num-${count}`).innerText
+//     obj['score'] = parseInt(document.getElementById(`num-${count}-score`).innerText)
+//     gatherScores.push(obj)
+//     count += 1
+// }
 
 
 class User {
@@ -173,33 +173,64 @@ class User {
         this.name = name
         this.score = score
         User.#instances.push(this)
+        fetch(LEADERBOARD_URL, {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+        },
+        body: JSON.stringify(this)
+        })
     }
 
     static instances(){
         return User.#instances
     }
 
-    static sortUsers(){
-        let sortedScores = User.instances().sort(function (a, b) {
-            return b.score - a.score;
-        });
-        this.leaderBoard(sortedScores)
-    }
+    // static sortUsers(){
+    //     let sortedScores = User.instances().sort(function (a, b) {
+    //         return b.score - a.score;
+    //     });
+    //     this.leaderBoard(sortedScores)
+    // }
 
-    static leaderBoard(user){
-        let count = 1;
-        user.forEach(function(u){
-            document.getElementById(`num-${count}`).innerText = u.name;
-            document.getElementById(`num-${count}-score`).innerText = u.score;
-            count += 1
-        });
-    }
+    // static leaderBoard(user){
+    //     let count = 1;
+    //     user.forEach(function(u){
+    //         document.getElementById(`num-${count}`).innerText = u.name;
+    //         document.getElementById(`num-${count}-score`).innerText = u.score;
+    //         count += 1
+    //     });
+    // }
 
 }
 
-let leaderBoardUsers;
-gatherScores.forEach(function (user) {
-    leaderBoardUsers = new User(user.name, user.score);
-});
+// let leaderBoardUsers;
+// gatherScores.forEach(function (user) {
+//     leaderBoardUsers = new User(user.name, user.score);
+// });
 
-User.sortUsers()
+// User.sortUsers()
+
+
+fetch(LEADERBOARD_URL)
+    .then(resp => resp.json())
+    .then(d => sortLB(d.data));
+
+function sortLB(data) {
+    let s = data.sort(function (a, b) {
+        return b.attributes.score - a.attributes.score;
+    });
+    showLeaderboard(s)
+}
+
+
+function showLeaderboard(d) {
+    let data = d;
+    let count = 1;
+    data.forEach(function(u){
+        document.getElementById(`num-${count}`).innerText = u.attributes.name;
+        document.getElementById(`num-${count}-score`).innerText = u.attributes.score;
+        count += 1
+    });
+}
