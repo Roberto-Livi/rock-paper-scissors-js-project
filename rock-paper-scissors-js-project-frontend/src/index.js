@@ -114,7 +114,7 @@ function addScoreToUser(userData, score){
     classUser = new User(name, score);
     document.getElementById("cpu-choice").style.display = "none";
     document.getElementById("user-choice").style.display = "none";
-    // User.sortUsers()
+    updateLeaderboard()
 }
 
 // Get user's best score
@@ -135,7 +135,7 @@ function pushScores(score){
 }
 
 
-
+// User's Choice Buttons
 const rock = document.getElementById("rock-button")
 rock.addEventListener("click", () => {
     userChoice("rock")
@@ -152,19 +152,6 @@ scissors.addEventListener("click", () => {
 })
 
 
-// Gather all Top Scores
-// let gatherScores = []
-// let count = 1
-
-// while(count < 11){
-//     let obj = {'name': 'value1', 'score': 'value2'}
-//     obj['name'] = document.getElementById(`num-${count}`).innerText
-//     obj['score'] = parseInt(document.getElementById(`num-${count}-score`).innerText)
-//     gatherScores.push(obj)
-//     count += 1
-// }
-
-
 class User {
 
     static #instances = []
@@ -173,6 +160,7 @@ class User {
         this.name = name
         this.score = score
         User.#instances.push(this)
+
         fetch(LEADERBOARD_URL, {
             method: "POST",
             headers: {
@@ -187,31 +175,15 @@ class User {
         return User.#instances
     }
 
-    // static sortUsers(){
-    //     let sortedScores = User.instances().sort(function (a, b) {
-    //         return b.score - a.score;
-    //     });
-    //     this.leaderBoard(sortedScores)
-    // }
-
-    // static leaderBoard(user){
-    //     let count = 1;
-    //     user.forEach(function(u){
-    //         document.getElementById(`num-${count}`).innerText = u.name;
-    //         document.getElementById(`num-${count}-score`).innerText = u.score;
-    //         count += 1
-    //     });
-    // }
-
 }
 
-// let leaderBoardUsers;
-// gatherScores.forEach(function (user) {
-//     leaderBoardUsers = new User(user.name, user.score);
-// });
 
-// User.sortUsers()
-
+// Leaderboard
+function updateLeaderboard(){
+    fetch(LEADERBOARD_URL)
+        .then((resp) => resp.json())
+        .then((d) => sortLB(d.data));
+}
 
 fetch(LEADERBOARD_URL)
     .then(resp => resp.json())
