@@ -137,7 +137,6 @@ paper.addEventListener("click", () => {
     userChoice("paper")
 })
 
-console.log(..."testing");
 
 const scissors = document.getElementById("scissors-button")
 scissors.addEventListener("click", () => {
