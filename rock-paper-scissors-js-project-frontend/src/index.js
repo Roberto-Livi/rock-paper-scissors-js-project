@@ -1,5 +1,3 @@
-console.log("testing...");
-
 const USER_URL = `http://localhost:3000/users`
 const SCORE_URL = `http://localhost:3000/scores`
 const LEADERBOARD_URL = `http://localhost:3000/leaderboards`
@@ -51,12 +49,6 @@ document.getElementById("submit").addEventListener("click", () => {
 document.getElementById("logout").addEventListener("click", () => {
     location.reload()
 })
-
-
-const BACKEND_URL = 'http://localhost:3000';
-fetch(`${BACKEND_URL}/test`)
-    .then(response => response.json())
-    .then(parsedResponse => console.log(parsedResponse));
 
 
 document.getElementById("cpu-choice").style.display = 'none';
@@ -114,7 +106,6 @@ function addScoreToUser(userData, score){
     classUser = new User(name, score);
     document.getElementById("cpu-choice").style.display = "none";
     document.getElementById("user-choice").style.display = "none";
-    updateLeaderboard()
 }
 
 // Get user's best score
