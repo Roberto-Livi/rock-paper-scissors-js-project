@@ -221,27 +221,7 @@ function showLeaderboard(d) {
 
 
 let filterButton = document.querySelector("#filter")
-
-let filterCount = 2;
 let clicked = 3;
-// filterButton.addEventListener("click", () => {
-//     fetch(LEADERBOARD_URL)
-//         .then(resp => resp.json())
-//         .then(leaderboards => {
-//             let objs = leaderboards.data.filter((data) => data.attributes.score > 0)
-//             User.filterRequest(objs)
-//         //     if(filterCount % 2 === 0){
-//         //         document.getElementById("filter-table").style.display = "none";
-//         //         document.querySelector("#filter-table").remove()
-//         //     } else {
-//         //         User.filterRequest(objs);
-//         //         document.getElementById("filter-table").style.display = "block";
-//         //         console.log(objs);
-//         //     }
-//         })
-//         // filterCount += 1;
-// })
-
 
 filterButton.addEventListener("click", () => {
 
