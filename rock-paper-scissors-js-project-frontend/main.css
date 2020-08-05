@@ -213,3 +213,7 @@ body {
 #rules-text {
     font-size: 30px;
 }
+
+#filter-table{
+    background-color: white;
+}

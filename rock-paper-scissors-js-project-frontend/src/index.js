@@ -145,28 +145,48 @@ scissors.addEventListener("click", () => {
 
 
 class User {
+    static #instances = [];
 
-    static #instances = []
-
-    constructor(name, score){
-        this.name = name
-        this.score = score
-        User.#instances.push(this)
+    constructor(name, score) {
+        this.name = name;
+        this.score = score;
+        User.#instances.push(this);
 
         fetch(LEADERBOARD_URL, {
             method: "POST",
             headers: {
             "Content-Type": "application/json",
-            "Accept": "application/json"
-        },
-        body: JSON.stringify(this)
-        })
+            Accept: "application/json",
+            },
+            body: JSON.stringify(this),
+        });
     }
 
-    static instances(){
-        return User.#instances
+    static filterRequest(objs) {
+
+        let table = document.getElementById("filter-table")
+        let tr = document.createElement("tr");
+        let th = document.createElement("th")
+        tr.appendChild(th);
+        th.innerText = "Scores above 0";
+        table.appendChild(tr);
+
+        for(let i = 0; i < objs.length; i++){
+            let row = document.createElement("tr");
+            let rowInfoName = document.createElement("td");
+            rowInfoName.innerText = objs[i].attributes.name;
+            let rowInfoScore = document.createElement("td");
+            rowInfoScore.innerText = objs[i].attributes.score;
+            row.appendChild(rowInfoName);
+            row.appendChild(rowInfoScore);
+            table.appendChild(row);
+        }
+
     }
 
+    static instances() {
+        return User.#instances;
+    }
 }
 
 
@@ -198,3 +218,47 @@ function showLeaderboard(d) {
         count += 1
     });
 }
+
+
+let filterButton = document.querySelector("#filter")
+
+let filterCount = 2;
+let clicked = 3;
+// filterButton.addEventListener("click", () => {
+//     fetch(LEADERBOARD_URL)
+//         .then(resp => resp.json())
+//         .then(leaderboards => {
+//             let objs = leaderboards.data.filter((data) => data.attributes.score > 0)
+//             User.filterRequest(objs)
+//         //     if(filterCount % 2 === 0){
+//         //         document.getElementById("filter-table").style.display = "none";
+//         //         document.querySelector("#filter-table").remove()
+//         //     } else {
+//         //         User.filterRequest(objs);
+//         //         document.getElementById("filter-table").style.display = "block";
+//         //         console.log(objs);
+//         //     }
+//         })
+//         // filterCount += 1;
+// })
+
+
+filterButton.addEventListener("click", () => {
+
+    if(clicked % 2 === 0 ){
+        document.getElementById("filter-table").style.display = 'none';
+    } else if(clicked > 3 && clicked % 2 !== 0){
+        document.getElementById("filter-table").style.display = "table";
+    } else {
+        fetch(LEADERBOARD_URL)
+            .then((resp) => resp.json())
+            .then((leaderboards) => {
+            let objs = leaderboards.data.filter(
+                (data) => data.attributes.score > 0
+            );
+                User.filterRequest(objs);
+            });
+    }
+
+    clicked += 1
+})
