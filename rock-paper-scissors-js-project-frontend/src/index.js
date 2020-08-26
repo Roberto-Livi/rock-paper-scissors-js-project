@@ -60,7 +60,7 @@ function userChoice(choice){
     let cpuElement = document.getElementById("cpu-choice")
 
     let spot = document.getElementById("user-choice")
-    spot.src = `images/${choice}.jpg`
+    spot.src = `images/${choice}.png`
 
     let cpuChoice = cpuChoiceArray[Math.floor(Math.random() * cpuChoiceArray.length)];
 
@@ -68,7 +68,7 @@ function userChoice(choice){
 
 
     setTimeout(() => {
-        cpuElement.src = `images/${cpuChoice}.jpg`
+        cpuElement.src = `images/${cpuChoice}.png`
         cpuElement.style.display = 'block';
     }, 1000);
 

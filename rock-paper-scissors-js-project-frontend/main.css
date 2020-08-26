@@ -217,3 +217,10 @@ body {
 #filter-table{
     background-color: white;
 }
+
+#ad {
+    position: absolute;
+    top: 92%;
+    left: 70%;
+
+}
