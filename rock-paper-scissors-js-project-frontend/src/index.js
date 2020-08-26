@@ -86,7 +86,6 @@ const userChoice = (choice) => {
             score = 0
             scoreElement.innerText = score;
             addScoreToUser(userData, postScore)
-            updateBestScore(postScore)
         }
         spot.style.display = 'none';
         cpuElement.style.display = 'none';
@@ -107,32 +106,26 @@ const addScoreToUser = (userData, score) => {
     classUser = new User(name, score);
     document.getElementById("cpu-choice").style.display = "none";
     document.getElementById("user-choice").style.display = "none";
+    userBestScore(userData)
 }
 
 // Get user's best score
 const userBestScore = (udata) => {
+    const bestScore = document.getElementById("best-score")
     fetch(`http://localhost:3000/users/${udata.id}`)
         .then(resp => resp.json())
         .then(data => data.included.forEach(pushScores))
 }
 
-
-let scores = []
-let bestScore;
-
 const pushScores = (score) => {
-    scores.push(score.attributes.score)
-    bestScore = Math.max(...scores)
-    document.getElementById("best-score").innerText = bestScore
-}
+    updateLeaderboard()
+    let currentBest = parseInt(document.getElementById("best-score").innerText);
 
-const updateBestScore = (score) => {
-    let currentBest = Math.max(...scores)
-    if(score > currentBest) {
-        document.getElementById("best-score").innerText = score
-        updateLeaderboard()
+    if(score.attributes.score > currentBest) {
+        document.getElementById("best-score").innerText = score.attributes.score
     }
-}
+
+};
 
 
 // User's Choice Buttons
