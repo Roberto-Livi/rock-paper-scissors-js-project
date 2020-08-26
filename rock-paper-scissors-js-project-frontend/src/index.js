@@ -111,24 +111,6 @@ const addScoreToUser = (userData, score) => {
     bestScore(score)
 }
 
-// Get user's best score when logging in
-const userBestScore = (udata) => {
-    fetch(`http://localhost:3000/users/${udata.id}`)
-        .then(resp => resp.json())
-        .then((data) => data.included.forEach(pushScores))
-}
-
-const pushScores = (score) => {
-    let currentBest = 0
-    updateLeaderboard()
-
-    if(score.attributes.score > currentBest) {
-        currentBest = score.attributes.score;
-        document.getElementById("best-score").innerText = currentBest
-    }
-
-}
-
 const bestScore = (score) => {
     let currentBest = parseInt(document.getElementById("best-score").innerText);
     updateLeaderboard()
@@ -136,6 +118,23 @@ const bestScore = (score) => {
     if(score > currentBest) {
         document.getElementById("best-score").innerText = score
     }
+
+}
+
+// Get user's best score when logging in
+const userBestScore = (udata) => {
+    fetch(`http://localhost:3000/users/${udata.id}`)
+        .then(resp => resp.json())
+        .then(data => pushScores(data))
+}
+
+const pushScores = (data) => {
+
+    updateLeaderboard();
+    let scoresArray = []
+    data.included.map((e) => scoresArray.push(e.attributes.score));
+
+    document.getElementById("best-score").innerText = Math.max(...scoresArray)
 
 }
 
