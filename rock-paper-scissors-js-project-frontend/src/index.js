@@ -131,10 +131,12 @@ const userBestScore = (udata) => {
 const pushScores = (data) => {
 
     updateLeaderboard();
+
     let scoresArray = []
     data.included.map((e) => scoresArray.push(e.attributes.score));
 
-    document.getElementById("best-score").innerText = Math.max(...scoresArray)
+    let score = Math.max(...scoresArray) > 0 ? Math.max(...scoresArray) : "0"
+    document.getElementById("best-score").innerText = score
 
 }
 
