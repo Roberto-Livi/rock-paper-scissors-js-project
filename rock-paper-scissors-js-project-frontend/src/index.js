@@ -103,30 +103,41 @@ const addScoreToUser = (userData, score) => {
         },
         body: JSON.stringify(score)
     })
-    classUser = new User(name, score);
+
+    classUser = new User(userData.name, score);
+    updateLeaderboard()
     document.getElementById("cpu-choice").style.display = "none";
     document.getElementById("user-choice").style.display = "none";
-    userBestScore(userData)
+    bestScore(score)
 }
 
-// Get user's best score
+// Get user's best score when logging in
 const userBestScore = (udata) => {
-    const bestScore = document.getElementById("best-score")
     fetch(`http://localhost:3000/users/${udata.id}`)
         .then(resp => resp.json())
-        .then(data => data.included.forEach(pushScores))
+        .then((data) => data.included.forEach(pushScores))
 }
 
 const pushScores = (score) => {
+    let currentBest = 0
     updateLeaderboard()
-    let currentBest = parseInt(document.getElementById("best-score").innerText);
 
     if(score.attributes.score > currentBest) {
-        document.getElementById("best-score").innerText = score.attributes.score
+        currentBest = score.attributes.score;
+        document.getElementById("best-score").innerText = currentBest
     }
 
-};
+}
 
+const bestScore = (score) => {
+    let currentBest = parseInt(document.getElementById("best-score").innerText);
+    updateLeaderboard()
+
+    if(score > currentBest) {
+        document.getElementById("best-score").innerText = score
+    }
+
+}
 
 // User's Choice Buttons
 const rock = document.getElementById("rock-button")
