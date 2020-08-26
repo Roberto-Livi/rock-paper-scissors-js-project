@@ -130,6 +130,7 @@ const updateBestScore = (score) => {
     let currentBest = Math.max(...scores)
     if(score > currentBest) {
         document.getElementById("best-score").innerText = score
+        updateLeaderboard()
     }
 }
 
@@ -220,7 +221,7 @@ function sortLB(data) {
 function showLeaderboard(d) {
     let data = d;
     let count = 1;
-    data.forEach(function(u){
+    data.forEach((u) => {
         document.getElementById(`num-${count}`).innerText = u.attributes.name;
         document.getElementById(`num-${count}-score`).innerText = u.attributes.score;
         count += 1
