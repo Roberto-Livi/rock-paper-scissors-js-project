@@ -55,7 +55,7 @@ document.getElementById("cpu-choice").style.display = 'none';
 document.getElementById("user-choice").style.display = 'none';
 let scoreElement = document.getElementById("score");
 let score = parseInt(scoreElement.innerText);
-function userChoice(choice){
+const userChoice = (choice) => {
     let cpuChoiceArray = ["rock", "paper", "scissors"]
     let cpuElement = document.getElementById("cpu-choice")
 
@@ -86,6 +86,7 @@ function userChoice(choice){
             score = 0
             scoreElement.innerText = score;
             addScoreToUser(userData, postScore)
+            updateBestScore(postScore)
         }
         spot.style.display = 'none';
         cpuElement.style.display = 'none';
@@ -94,7 +95,7 @@ function userChoice(choice){
 
 
 let classUser;
-function addScoreToUser(userData, score){
+const addScoreToUser = (userData, score) => {
     fetch(`http://localhost:3000/users/${userData.id}`, {
         method: 'PATCH',
         headers: {
@@ -109,7 +110,7 @@ function addScoreToUser(userData, score){
 }
 
 // Get user's best score
-function userBestScore(udata){
+const userBestScore = (udata) => {
     fetch(`http://localhost:3000/users/${udata.id}`)
         .then(resp => resp.json())
         .then(data => data.included.forEach(pushScores))
@@ -119,10 +120,17 @@ function userBestScore(udata){
 let scores = []
 let bestScore;
 
-function pushScores(score){
+const pushScores = (score) => {
     scores.push(score.attributes.score)
     bestScore = Math.max(...scores)
     document.getElementById("best-score").innerText = bestScore
+}
+
+const updateBestScore = (score) => {
+    let currentBest = Math.max(...scores)
+    if(score > currentBest) {
+        document.getElementById("best-score").innerText = score
+    }
 }
 
 
